@@ -8,6 +8,9 @@ import ItensEntrada from "../paginas/ItensEntrada";
 import AuthProvider from "../autenticacao/autenticacao";
 import Login from "../paginas/Login";
 import Cadastro from "../paginas/Cadastro"
+import ListarEntradas from "../paginas/ListarEntradas";
+import ListarItensEntrada from "../paginas/ListarItensEntrada";
+import EditarItensEntrada from "../paginas/EditarItensEntrada";
 import PrivateRoute from "../autenticacao/rotasPrivadas";
 
 function Rotas() {
@@ -17,7 +20,15 @@ function Rotas() {
             <Routes>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/cadastro" element={<Cadastro/>}/>
-
+                <Route path="/listaritensentrada" element={<PrivateRoute/>}>
+                    <Route path="/listaritensentrada" element={<ListarItensEntrada/>}/>
+                </Route>
+                <Route path="/editaritensentrada/:id" element={<PrivateRoute/>}>
+                    <Route path="/editaritensentrada/:id" element={<EditarItensEntrada/>}/>
+                </Route>
+                <Route path="/listarentradas" element={<PrivateRoute/>}>
+                    <Route path="/listarentradas" element={<ListarEntradas/>}/>
+                </Route>
                 <Route path="/cadastrofornecedor" element={<PrivateRoute/>}>
                     <Route path="/cadastrofornecedor" element={<CadastroFornecedor/>}/>
                 </Route>

@@ -4,7 +4,7 @@ export const AuthContext = createContext()
 
 const verificarTokenServidor = async(token)=>{
     try{
-        const response = await axiosInstance.post('/validaToken', {token})
+        const response = await axiosInstance.post('/validarToken', {token})
         return response.data.valid
     } catch(error){
         return false

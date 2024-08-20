@@ -1,15 +1,15 @@
 
 const express = require('express');
 const sequelize = require('./data_base/db');
-const pecasRotas = require('./rotas/pecasRotas');
+// const pecasRotas = require('./rotas/pecasRotas');
 const fornecedoresRotas = require('./rotas/fornecedorRotas')
 const notaEntradaRotas = require('./rotas/notaEntradaRotas')
 const itensEntradaRotas = require('./rotas/itensEntradaRotas')
-const itensSaidaRotas = require('./rotas/itensSaidaRotas')
-const notaSaidaRotas = require('./rotas/notaSaidaRotas')
+// const itensSaidaRotas = require('./rotas/itensSaidaRotas')
+// const notaSaidaRotas = require('./rotas/notaSaidaRotas')
 const loginRotas = require('./rotas/usuarioRotas')
-const uploadArquivosRotas = require('./rotas/uploadArquivosRotas')
-const validarToken = require('./rotas/tokenRotas')
+const tokenRotas = require('./rotas/tokenRotas')
+// const uploadArquivosRotas = require('./rotas/uploadArquivosRotas')
 
 //Importar o modulo Swagger
 const setupSwagger = require('./swagger');
@@ -30,15 +30,15 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(express.json());
-app.use('/api', pecasRotas);
+// app.use('/api', pecasRotas);
 app.use('/api', fornecedoresRotas);
 app.use('/api', notaEntradaRotas);
 app.use('/api', itensEntradaRotas);
-app.use('/api', itensSaidaRotas);
-app.use('/api', notaSaidaRotas);
+// app.use('/api', itensSaidaRotas);
+// app.use('/api', notaSaidaRotas);
 app.use('/api', loginRotas);
+app.use('/api', tokenRotas);
 // app.use('/api', uploadArquivosRotas)
-// app.use('/api', validarToken)
 
 
 // Configurar Swagger

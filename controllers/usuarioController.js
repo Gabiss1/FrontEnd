@@ -16,12 +16,12 @@ exports.createusuario = async (req, res) => {
   console.log('createusuario');
   const { nome, email, senha} = req.body;
   console.log('Createusuario.Nome'+nome);
-  console.log('createusuario.email'+email);
+  console.log('createusuario.Email'+email);
   
   const hashedPassword = getHashedPassword(senha)
 
   try {
-    const novoUsuario = await Usuario.create({ nome, email ,senha:hashedPassaword});
+    const novoUsuario = await Usuario.create({ nome, email ,senha:hashedPassword});
     res.status(201).json(novoUsuario);
   } catch (err) {
     console.log("Erro ao criar usuário");
@@ -118,9 +118,9 @@ function getHashedPassword(senha) {
   console.log('getHashedPassword');
   //valor 10 do custo para gerar o hash
   const salt = bcrypt.genSaltSync(10);
-  const hashedPassaword = bcrypt.hashSync(senha , salt);
-  console.log('getHashedPassword.hashedPassword:' , hashedPassaword);
-  return hashedPassaword;
+  const hashedPassword = bcrypt.hashSync(senha , salt);
+  console.log('getHashedPassword.hashedPassword:' , hashedPassword);
+  return hashedPassword;
 }
 
 // efetuar o login do usuario
@@ -130,7 +130,7 @@ function getHashedPassword(senha) {
 
   console.log('login', email);
   try {
-    const usuario = await Usuario.findAll({ where: {email }});
+    const usuario = await Usuario.findOne({ where: {email }});
     console.log('Usuario....:',usuario);
     if (usuario===null) {
       return res.status(400).send('dados incorretos - cod 001');

@@ -26,8 +26,7 @@ exports.cadastrarNotaEntrada = async (req, res) => {
       const fornecedor = await Fornecedor.findOne({ where: { nomeEmpresa } });
       const novaEntrada = await NotaEntrada.findByPk(numeroNota);
       if (fornecedor, novaEntrada) {
-        fornecedorId = fornecedor.id
-        novaEntrada.fornecedorId = fornecedorId;
+        novaEntrada.fornecedorId = fornecedor.id;
         novaEntrada.numeroNota = numeroNota;
         novaEntrada.updatedAt = new Date();
         await novaEntrada.save();
