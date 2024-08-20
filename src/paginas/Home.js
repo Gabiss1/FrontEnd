@@ -6,10 +6,11 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
     <div className="App">
-      <Header title="Página Inicial"/>
+      <Header title="Controle de peças"/>
       <header className="App-header">
-        <p>Controle de Estoque</p>
         <nav style={{ position: 'absolute', top: '150px', left: 0, width: '100%', textAlign: 'center', padding: '10px', backgroundColor: 'black' }}>
+        <Link to="/cadastropeca" className="nav-link">Cadastrar Peças</Link>
+        <Link to="/listarpeca" className="nav-link">Listar Peças</Link>
         <Link to="/cadastrofornecedor" className="nav-link">Cadastro Fornecedor</Link>
         <Link to="/entrada" className="nav-link">Cadastro Entrada</Link>
         <Link to="/listarentradas" className="nav-link">Listar Entradas</Link>

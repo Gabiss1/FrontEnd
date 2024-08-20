@@ -1,5 +1,3 @@
-
-
 import Header from '../Header';
 
 import '../App.css';
@@ -9,17 +7,18 @@ import BotaoVoltar from '../componentes/BotaoVoltar';
 //Utilizada para auxiliar no controle de outras funcoes da aplicacao
 import React, { useState, useEffect } from 'react';
 
+import axios from 'axios';
 import axiosInstance from '../axios/configuracaoAxios';
 
-
-function Cadastro() {
+function CadastroPeca() {
 
     //cria novo estado para os campos da tela
     const [campos, setCampos] = useState({
         nome: '',
-        email: '',
-        senha: '',
-        confirmarsenha:''
+        codigo: '',
+        fornecedor: '',
+        material: '',
+        desenho: ''
     });
 
     const [mensagem, setMensagem] = useState('');
@@ -43,38 +42,27 @@ function Cadastro() {
         const novosErros = {};
 
         if (!campos.nome) {
-            novosErros.nome = 'Nome é obrigatório';
+            novosErros.nome = 'Digite o nome da peça';
         }
 
-        if (!campos.email) {
-            novosErros.email = 'E-mail é obrigatório';
+        if (!campos.codigo) {
+            novosErros.codigo = 'Código é obrigatório';
         }
 
-        if (!campos.senha) {
-            novosErros.senha = 'Senha é obrigatório';
+        if (!campos.fornecedor) {
+            novosErros.fornecedor = 'Fornecedor é obrigatório';
         }
 
-        if (!campos.confirmarsenha) {
-            novosErros.confirmarsenha = 'Confirmar Senha é obrigatório';
-        }else if (campos.confirmarsenha!==campos.senha) {
-            novosErros.senha = 'Senha e Confirmar Senha devem ser iguais!';
+        if (!campos.material) {
+            novosErros.material = 'Material é obrigatório';
         }
 
-
+        if (!campos.desenho) {
+            novosErros.desenho = 'Desenho é obrigatório';
+        }
         setErros(novosErros);
 
         return Object.keys(novosErros).length === 0;
-    }
-
-
-    function validaConfirmacaoSenha(){
-        const novosErros = {};
-        if (!campos.confirmarsenha) {
-            novosErros.confirmarsenha = 'Confirmar Senha é obrigatório';
-        }else if (campos.confirmarsenha!==campos.senha) {
-            novosErros.confirmarsenha = 'Senha e Confirmar Senha devem ser iguais!';
-        }
-        setErros(novosErros);
     }
 
     function handleFormSubmit(event) {
@@ -87,7 +75,7 @@ function Cadastro() {
 
         console.log('Submetendo:', campos);
 
-        axiosInstance.post('/usuarios', campos)
+        axiosInstance.post('/cadastrarpeca', campos)
             .then(response => {
                 setMensagem('Formulário enviado com sucesso!');
                 console.log(response.data);
@@ -95,9 +83,10 @@ function Cadastro() {
                 // Limpar os campos do formulário após o envio
                 setCampos({
                     nome: '',
-                    email: '',
-                    senha: '',
-                    confirmarsenha:''
+                    codigo: '',
+                    fornecedor: '',
+                    material: '',
+                    desenho: '',
                 });
 
                 // Limpar mensagem após 3 segundos
@@ -110,16 +99,15 @@ function Cadastro() {
                 setMensagem('Erro ao enviar o formulário. Tente novamente.');
             });
     }
-
     return (
         <div className="App">
-            <Header title="Formulario de Cadastro" />
+            <Header title="Cadastro de Peças" />
 
             <div className="form-container">
                 <form onSubmit={handleFormSubmit}>
                     <fieldset>
                         <legend>
-                            <h2>Dados de Cadastro</h2>
+                            <h2>Dados da peça</h2>
                         </legend>
 
                         <div className="inline-fields">
@@ -129,27 +117,36 @@ function Cadastro() {
                                     {erros.nome && <p className="error">{erros.nome}</p>}
                                 </label>
                             </div>
-                        </div>    
+                        </div>
+                        
+                        <div className="field-menor">
+                            <label>Código:
+                                <input type="text" name="codigo" id="codigo" value={campos.codigo} onChange={handleInputChange} />
+                                {erros.codigo && <p className="error">{erros.codigo}</p>}
+                            </label>
+                        </div>
+
+                        <div className="inline-fields">
+                            <div className="field-menor">
+                                <label>Material:
+                                    <input type="text" name="material" id="material" value={campos.material} onChange={handleInputChange} />
+                                    {erros.material && <p className="error">{erros.material}</p>}
+                                </label>
+                            </div>
+
+                            <div className="field-menor">
+                                <label>Fornecedor:
+                                    <input type="text" name="fornecedor" id="fornecedor" value={campos.fornecedor} onChange={handleInputChange} />
+                                    {erros.fornecedor && <p className="error">{erros.fornecedor}</p>}
+                                </label>
+                            </div>
+                        </div>
 
                         <div className="inline-fields">
                             <div className="field-maior">
-                                <label>E-mail:
-                                    <input type="text" name="email" id="nomemaile" value={campos.email} onChange={handleInputChange} />
-                                    {erros.email && <p className="error">{erros.email}</p>}
-                                </label>
-                            </div>
-
-                            <div className="field-menor">
-                                <label>Senha:
-                                    <input type="password" name="senha" id="senha" value={campos.senha} onChange={handleInputChange} />
-                                    {erros.senha && <p className="error">{erros.senha}</p>}
-                                </label>
-                            </div>
-
-                            <div className="field-menor">
-                                <label>Confirmar Senha:
-                                    <input type="password" name="confirmarsenha" id="confirmarsenha" value={campos.confirmarsenha} onChange={handleInputChange} onBlur={validaConfirmacaoSenha}/>
-                                    {erros.confirmarsenha && <p className="error">{erros.confirmarsenha}</p>}
+                                <label>Desenho:
+                                    <input type="text" name="desenho" id="desenho" value={campos.desenho} onChange={handleInputChange} />
+                                    {erros.bairro && <p className="error">{erros.desenho}</p>}
                                 </label>
                             </div>
                         </div>
@@ -164,4 +161,4 @@ function Cadastro() {
     )
 }
 
-export default Cadastro;
+export default CadastroPeca;
